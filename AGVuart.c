@@ -154,7 +154,8 @@ task main()
 
 	void shiftR()
 	{
-		if(lastchar != '>'){
+		if(lastchar != '>')
+		{
 			sendChar(uartOne, '>');
 			lastchar = '>'
 		}
@@ -162,14 +163,17 @@ task main()
 		if(lasthdelay)
 			lastheading = true;
 		startMotor(Rm, -127);
-		while (!Mv) {
+		while (!Mv) 
+		{
 			updateSensor();
-			if (Lv && Rv) {
+			if (Lv && Rv) 
+			{
 				pause();
 				return;
 			}
 		}
-		if (Lv && Rv) {
+		if (Lv && Rv) 
+		{
 			pause();
 			return;
 		}
@@ -179,7 +183,8 @@ task main()
 
 	void shiftL()
 	{
-		if(lastchar != '<'){
+		if(lastchar != '<')
+		{
 			sendChar(uartOne, '<');
 			lastchar = '<'
 		}
@@ -187,14 +192,17 @@ task main()
 		if(!lasthdelay)
 			lastheading = false;
 		startMotor(Lm, -127);
-		while (!Mv) {
+		while (!Mv)
+		{
 			updateSensor();
-			if (Lv && Rv) {
+			if (Lv && Rv) 
+			{
 				pause();
 				return;
 			}
 		}
-		if (Lv && Rv) {
+		if (Lv && Rv)
+		{
 			pause();
 			return;
 		}
@@ -204,53 +212,65 @@ task main()
 
 	void ledUpdate()
 	{
-		if (Lv) {
+		if (Lv)
+		{
 			turnLEDOn(Ll);
 		}
-		else {
+		else 
+		{
 			turnLEDOff(Ll);
 		}
 
-		if (Mv) {
+		if (Mv) 
+		{
 			turnLEDOn(Ml);
 		}
-		else {
+		else 
+		{
 			turnLEDOff(Ml);
 		}
 
-		if (Rv) {
+		if (Rv) 
+		{
 			turnLEDOn(Rl);
 		}
-		else {
+		else 
+		{
 			turnLEDOff(Rl);
 		}
 	}
 
 	void ledUpdateUART()
 	{
-		if (Lv) {
+		if (Lv) 
+		{
 			turnLEDOn(Ll);
 			sendChar(uartOne, 'L');
 		}
-		else {
+		else 
+		{
 			turnLEDOff(Ll);
 			sendChar(uartOne, 'l');
 		}
 
-		if (Mv) {
+		if (Mv) 
+		{
 			turnLEDOn(Ml);
 			sendChar(uartOne, 'M');
 		}
-		else {
+		else 
+		{
 			turnLEDOff(Ml);
 			sendChar(uartOne, 'm');
 		}
 
-		if (Rv) {
+		if (Rv)
+		{
 			turnLEDOn(Rl);
 			sendChar(uartOne, 'R');
 		}
-		else {
+		else 
+		{
 			turnLEDOff(Rl);
 			sendChar(uartOne, 'r');
 		}
@@ -259,7 +279,8 @@ task main()
 	void nonblockingdelay(int ms)
 	{
 		int delaytimer = time1[T1];
-		while (delaytimer + ms >= time1[T1]) {
+		while (delaytimer + ms >= time1[T1])
+		{
 			ledUpdate();
 		}
 		return;
@@ -291,32 +312,37 @@ task main()
 		stopAll();
 		int scantime = 40;
 
-		if (Mv && !Rv && !Lv || !Rv && Lv || Rv && !Lv){
+		if (Mv && !Rv && !Lv || !Rv && Lv || Rv && !Lv)
+		{
 			return;
 		}
 
 		if (lastheading) {
 			sendChar(uartOne, '>');
-			for (int R = 0; R < scantime; R++) {
+			for (int R = 0; R < scantime; R++) 
+			{
 				startMotor(Lm, 100);
 				startMotor(Rm, -100);
 				delay(20);
 				//stopAll();
 				updateSensor();
-				if (Mv) {
+				if (Mv)
+				{
 					stopAll();
 					return;
 				}
 				//delay(150);
 			}
 			sendChar(uartOne, '<');
-			for (int L = 0; L < scantime * 2; L++) {
+			for (int L = 0; L < scantime * 2; L++)
+			{
 				startMotor(Rm, 100);
 				startMotor(Lm, -100);
 				delay(20);
 				//stopAll();
 				updateSensor();
-				if (Mv) {
+				if (Mv) 
+				{
 					stopAll();
 					return;
 				}
@@ -326,26 +352,30 @@ task main()
 		else
 		{
 			sendChar(uartOne, '<');
-			for (int L = 0; L < scantime; L++) {
+			for (int L = 0; L < scantime; L++)
+			{
 				startMotor(Rm, 100);
 				startMotor(Lm, -100);
 				delay(20);
 				//stopAll();
 				updateSensor();
-				if (Mv) {
+				if (Mv) 
+				{
 					stopAll();
 					return;
 				}
 				//delay(150);
 			}
 			sendChar(uartOne, '>');
-			for (int R = 0; R < scantime * 2; R++) {
+			for (int R = 0; R < scantime * 2; R++) 
+			{
 				startMotor(Lm, 100);
 				startMotor(Rm, -100);
 				delay(20);
 				//stopAll();
 				updateSensor();
-				if (Mv) {
+				if (Mv) 
+				{
 					stopAll();
 					return;
 				}
