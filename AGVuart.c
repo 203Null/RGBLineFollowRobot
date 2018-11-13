@@ -57,9 +57,11 @@ task main()
 			{
 				updateSensor();
 				//Event Handle
-				if (Mv && !Lv && !Rv) { //Only M
+				if (Mv && !Lv && !Rv) 
+				{ //Only M
 					startAll();
-					if(lastchar != 'G'){
+					if(lastchar != 'G')
+					{
 						sendChar(uartOne, 'G');
 						lastchar = 'G'
 					}
